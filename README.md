@@ -86,7 +86,7 @@ The following settings are allowed:
 * `config.template.service-instance-name`: Service Instance Name to which should be connected 
 * `heap-percentage`: Percentage of memory (Total memory - reserved memory) which can be used by the heap memory: Default is 75
 * `node-options`: Additional node-js arguments. Empty by default 
-* `plugins`: additional plugins to install (array of plugin names). Defaults to none. If you are in a disconnected environment put the plugin binaries into the plugin folder.
+* `plugins`: Additional plugins to install (array of plugin names). Defaults to none. If you are in a disconnected environment put the plugin binaries into the plugin folder.
 * `reserved-memory`: Reserved memory in MB which should not be used by heap memory. Default is 300
 * `version`: Version of Kibana to be deployed. Defaults to 6.0.0
 
@@ -122,7 +122,7 @@ Put any additional required certificate in this folder. They will be added to th
 #### conf.d folder
 In the folder `conf.d` the [Kibana](https://www.elastic.co/guide/en/kibana/current/index.html) configuration is provided. The folder is optional. All files in this directory are used as part of the Kibana configuration.
 Prior to the start of Kibana, all files in this directory are processed by [dockerize](https://github.com/jwilder/dockerize) as templates.
-This allow to update the configuration files based on the environment variables provided by Cloud Foundry (e.g. VCAP_APPLICATION, VCAP_SERVICES).
+This allows to update the configuration files based on the environment variables provided by Cloud Foundry (e.g. VCAP_APPLICATION, VCAP_SERVICES).
 
 The supported functions for the templates are documented in [dockerize - using templates](https://github.com/jwilder/dockerize/blob/master/README.md#using-templates)
 and [golang - template](https://golang.org/pkg/text/template/).
@@ -144,7 +144,6 @@ cf push -b https://github.com/swisscom/swisscom/cf-buildpack-kibana.git
 
 You find more details in the [Cloud Foundry documentation](https://docs.cloudfoundry.org/devguide/services/log-management.html)
 
-Alternatively the log drain may also be configured in your application manifest as described in chapter [Application Log Streaming](https://docs.cloudfoundry.org/services/app-log-streaming.html).
 
 ## Limitations
 
