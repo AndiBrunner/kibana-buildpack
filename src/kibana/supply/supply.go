@@ -444,6 +444,10 @@ func (gs *Supplier) InstallKibana() error {
 		return err
 	}
 
+	sleepCommand := ""
+	if gs.KibanaConfig.Buildpack.DoSleepCommand {
+		sleepCommand = "yes"
+	}
 	content := util.TrimLines(fmt.Sprintf(`
 			export K_BP_RESERVED_MEMORY=%d
 			export K_BP_HEAP_PERCENTAGE=%d
@@ -451,6 +455,7 @@ func (gs *Supplier) InstallKibana() error {
 			export K_CMD_ARGS=%s
 			export K_ROOT=$DEPS_DIR/%s
 			export KIBANA_HOME=$DEPS_DIR/%s
+			export K_DO_SLEEP=%s
 			PATH=$PATH:$KIBANA_HOME/bin
 			`,
 		gs.KibanaConfig.ReservedMemory,
@@ -458,12 +463,15 @@ func (gs *Supplier) InstallKibana() error {
 		gs.KibanaConfig.NodeOpts,
 		gs.KibanaConfig.CmdArgs,
 		gs.Stager.DepsIdx(),
-		gs.Kibana.RuntimeLocation))
+		gs.Kibana.RuntimeLocation,
+		sleepCommand))
 
 	if err := gs.WriteDependencyProfileD(gs.Kibana.Name, content); err != nil {
 		gs.Log.Error("Error writing profile.d script for Kibana: %s", err.Error())
 		return err
 	}
+
+
 	return nil
 }
 

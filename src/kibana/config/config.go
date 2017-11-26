@@ -62,6 +62,7 @@ type Buildpack struct {
     Set                   bool 			   `yaml:"-"`
 	LogLevel              string           `yaml:"log-level"`
 	NoCache               bool             `yaml:"no-cache"`
+	DoSleepCommand        bool             `yaml:"sleep-command"`
 }
 
 type ConfigTemplate struct {

@@ -106,8 +106,11 @@ func (gf *Finalizer) CreateStartupEnvironment(tempDir string) error {
 					echo "--> using cmd_args=\"$K_CMD_ARGS\""
 				fi
 
+				if [ -n "$K_DO_SLEEP" ] ; then
+					sleep 3600
+				fi
+	
 				chmod +x $HOME/bin/*.sh
-				#sleep 3600
 				$KIBANA_HOME/bin/kibana -c $HOME/kibana.config/kibana.yml $K_CMD_ARGS
 				`))
 

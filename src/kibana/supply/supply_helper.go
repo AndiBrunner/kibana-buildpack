@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"io/ioutil"
 	"fmt"
+	"kibana/util"
 )
 
 
@@ -41,6 +42,10 @@ func (gs *Supplier) WriteDependencyProfileD(dependencyName string, content strin
 }
 
 func (gs *Supplier) ReadCachedDependencies() error {
+
+	if gs.KibanaConfig.Buildpack.NoCache {
+		util.RemoveAllContents(gs.Stager.CacheDir())
+	}
 
 	gs.CachedDeps = make(map[string]string)
 	os.MkdirAll(gs.DepCacheDir,0755)
@@ -77,6 +82,10 @@ func (gs *Supplier) InstallDependency(dependency Dependency) error {
 	if err = gs.Manifest.InstallDependencyWithCache(dep, filepath.Join(gs.DepCacheDir,dependency.DirName), dependency.StagingLocation); err != nil {
 		gs.Log.Error("Error installing '%s': %s", dependency.Name, err.Error())
 		return err
+	}
+
+	if gs.KibanaConfig.Buildpack.NoCache {
+		os.RemoveAll(filepath.Join(gs.DepCacheDir,dependency.DirName))
 	}
 
 	gs.CachedDeps[dependency.DirName] = "in use"
