@@ -43,12 +43,11 @@ func (gs *Supplier) WriteDependencyProfileD(dependencyName string, content strin
 
 func (gs *Supplier) ReadCachedDependencies() error {
 
-	gs.Log.Info("NoCache set: %t", gs.KibanaConfig.Buildpack.NoCache)
 	if gs.KibanaConfig.Buildpack.NoCache {
 		gs.Log.Info("--> cleaning cache")
 		err := util.RemoveAllContents(gs.Stager.CacheDir())
 		if err != nil{
-			gs.Log.Info("--> error removing cache: %s", err.Error())
+			gs.Log.Info("--> error cleaning cache: %s", err.Error())
 		}
 	}
 
@@ -62,7 +61,7 @@ func (gs *Supplier) ReadCachedDependencies() error {
 	}
 
 	for _, dirEntry := range cacheDir{
-		gs.Log.Info(fmt.Sprintf("--> added dependency '%s' to cache list", dirEntry.Name()))
+		gs.Log.Debug(fmt.Sprintf("--> added dependency '%s' to cache list", dirEntry.Name()))
 		gs.CachedDeps[dirEntry.Name()] = ""
 	}
 
@@ -78,7 +77,7 @@ func (gs *Supplier) InstallDependency(dependency Dependency) error {
 	//check if there are other cached versions of the same dependency
 	for cachedDep := range gs.CachedDeps{
 		if cachedDep != dependency.DirName && strings.HasPrefix(cachedDep, dependency.Name + "-") {
-			gs.Log.Info(fmt.Sprintf("--> deleting unused dependency version '%s' from application cache", cachedDep))
+			gs.Log.Debug(fmt.Sprintf("--> deleting unused dependency version '%s' from application cache", cachedDep))
 			gs.CachedDeps[cachedDep] = "deleted"
 			os.RemoveAll(filepath.Join(gs.DepCacheDir, cachedDep))
 		}
@@ -103,7 +102,7 @@ func (gs *Supplier) RemoveUnusedDependencies () error{
 	for cachedDep, value := range gs.CachedDeps{
 	//	gs.Log.Info("key: %s, value: %s", cachedDep, value)
 		if value == "" {
-			gs.Log.Info(fmt.Sprintf("--> deleting unused dependency '%s' from application cache", cachedDep))
+			gs.Log.Debug(fmt.Sprintf("--> deleting unused dependency '%s' from application cache", cachedDep))
 			os.RemoveAll(filepath.Join(gs.DepCacheDir, cachedDep))
 		}
 	}

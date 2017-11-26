@@ -73,22 +73,24 @@ func Run(gs *Supplier) error {
 	gs.PluginsToInstall = make(map[string]string)
 	gs.TemplatesToInstall = []conf.Template{}
 
-	if err := gs.ReadCachedDependencies(); err != nil {
-		return err
-	}
-
-	//Eval Kibana file and prepare dir structure
+	//Eval Kibana file
 	if err := gs.EvalKibanaFile(); err != nil {
 		gs.Log.Error("Unable to evaluate Kibana file: %s", err.Error())
 		return err
 	}
 
-	//Eval Kibana file and prepare dir structure
+	//Init Cache
+	if err := gs.ReadCachedDependencies(); err != nil {
+		return err
+	}
+
+	//Show Depug Infos
 	if err := gs.EvalTestCache(); err != nil {
 		gs.Log.Error("Unable to test cache: %s", err.Error())
 		return err
 	}
 
+	//Prepare dir structure
 	if err := gs.PrepareAppDirStructure(); err != nil {
 		gs.Log.Error("Unable to prepare directory structure for the app: %s", err.Error())
 		return err
