@@ -45,7 +45,11 @@ func (gs *Supplier) WriteDependencyProfileD(dependencyName string, content strin
 func (gs *Supplier) ReadCachedDependencies() error {
 
 	if gs.KibanaConfig.Buildpack.NoCache {
-		util.RemoveAllContents(gs.Stager.CacheDir())
+		gs.Log.Info("--> removing cache")
+		err := util.RemoveAllContents(gs.Stager.CacheDir())
+		if err != nil{
+			gs.Log.Info("--> error removing cache: %s", err.Error())
+		}
 	}
 
 	gs.CachedDeps = make(map[string]string)
