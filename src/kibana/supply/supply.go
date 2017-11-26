@@ -479,8 +479,8 @@ func (gs *Supplier) InstallUserCertificates() error {
 	}
 
 	localCerts, _ := gs.ReadLocalCertificates(gs.Stager.BuildDir() + "/certificates")
-	destCertFileStaging := filepath.Join(gs.Kibana.StagingLocation, "certificates", "kibana.crt")
-	destCertFileRuntime := filepath.Join(gs.Kibana.RuntimeLocation, "certificates", "kibana.crt")
+	destCertFileStaging := filepath.Join(gs.Stager.DepDir(), "certificates", "kibana.crt")
+	destCertFileRuntime := filepath.Join(gs.Stager.DepsIdx(), "certificates", "kibana.crt")
 
 	for i := 0; i < len(gs.KibanaConfig.Certificates); i++ {
 
