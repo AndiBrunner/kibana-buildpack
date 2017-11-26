@@ -15,13 +15,13 @@ dependencies:
 - name: kibana
   version: 6.0.0
   uri: https://swisscom-buildpacks.scapp.io/dependencies/elk/kibana-6.0.0.tar.gz
-  sha256: f98252002d15aa7547bc8beea4a18f376ac01d1bab4d2ff9da6acbcdc2f21233
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
   cf_stacks:
   - cflinuxfs2
 - name: kibana-plugins
   version: 6.0.0
   uri: https://swisscom-buildpacks.scapp.io/dependencies/elk/kibana-plugins-6.0.0.tar.gz
-  sha256: fe331430fc6160e6646bc202bda3c4c9bc951c95f3fc5723f7c12aa381ef392b
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
   cf_stacks:
   - cflinuxfs2
 - name: x-pack
@@ -32,13 +32,13 @@ dependencies:
   - cflinuxfs2
 - name: gte
   version: 1.0.1
-  uri: https://swisscom-buildpacks.scapp.io/dependencies/logstash-buildpack/gte-1.0.1.tar.gz
-  sha256: 16fc4d0f657e8fda6085376cff8cab1b4808fc4338b4e195163f70c0a8b8ab58
+  uri: https://swisscom-buildpacks.scapp.io/dependencies/elk/gte-1.0.1.tar.gz
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
   cf_stacks:
   - cflinuxfs2
 - name: jq
   version: 1.5
-  uri: https://swisscom-buildpacks.scapp.io/dependencies/logstash-buildpack/jq-1.5.tar.gz
+  uri: https://swisscom-buildpacks.scapp.io/dependencies/elk/jq-1.5.tar.gz
   sha256: 49a84557c7e7541d49e2dda5e2738eea61199edaecf8139f99a78dae0dd3f7a6
   cf_stacks:
   - cflinuxfs2
