@@ -109,7 +109,7 @@ func (gf *Finalizer) CreateStartupEnvironment(tempDir string) error {
 				if [ -n "$K_DO_SLEEP" ] ; then
 					sleep 3600
 				fi
-	
+
 				chmod +x $HOME/bin/*.sh
 				$KIBANA_HOME/bin/kibana -c $HOME/kibana.config/kibana.yml $K_CMD_ARGS
 				`))

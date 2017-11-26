@@ -18,6 +18,12 @@ dependencies:
   sha256: 9a7eb9fe9bad1884d277a78cbf57dd79db9e74684a993e536ff7f2fe76195c60
   cf_stacks:
   - cflinuxfs2
+- name: kibana
+  version: 4.3.3
+  uri: https://swisscom-buildpacks.scapp.io/dependencies/elk/kibana-4.3.3.tar.gz
+  sha256: a82d768511d5f14ce1eb56e68c92561744b1df49fd58c333d4e2ba120d95cf6b
+  cf_stacks:
+  - cflinuxfs2
 - name: kibana-plugins
   version: 6.0.0
   uri: https://swisscom-buildpacks.scapp.io/dependencies/elk/kibana-plugins-6.0.0.tar.gz
