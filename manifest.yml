@@ -21,7 +21,7 @@ dependencies:
 - name: kibana
   version: 4.3.3
   uri: https://swisscom-buildpacks.scapp.io/dependencies/elk/kibana-4.3.3.tar.gz
-  sha256: a82d768511d5f14ce1eb56e68c92561744b1df49fd58c333d4e2ba120d95cf6b
+  sha256: 0c949f3a544f74236f9f3e9a3171798d07173270d4a8acc94941897a053e8c28
   cf_stacks:
   - cflinuxfs2
 - name: kibana-plugins
