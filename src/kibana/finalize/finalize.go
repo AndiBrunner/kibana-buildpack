@@ -107,8 +107,8 @@ func (gf *Finalizer) CreateStartupEnvironment(tempDir string) error {
 				fi
 
 				chmod +x $HOME/bin/*.sh
-				sleep 3600
-				#$KIBANA_HOME/bin/kibana -c $HOME/kibana.config/kibana.yml $K_CMD_ARGS
+				#sleep 3600
+				$KIBANA_HOME/bin/kibana -c $HOME/kibana.config/kibana.yml $K_CMD_ARGS
 				`))
 
 	err := ioutil.WriteFile(filepath.Join(gf.Stager.BuildDir(), "bin/run.sh"), []byte(content), 0755)
