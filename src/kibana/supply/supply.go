@@ -79,6 +79,11 @@ func Run(gs *Supplier) error {
 		return err
 	}
 
+	//Set log level
+	if strings.ToLower(gs.KibanaConfig.Buildpack.LogLevel) == "debug" {
+		os.Setenv("BP_DEBUG", "true")
+	}
+
 	//Init Cache
 	if err := gs.ReadCachedDependencies(); err != nil {
 		return err
@@ -184,20 +189,13 @@ func Run(gs *Supplier) error {
 func (gs *Supplier) EvalTestCache() error {
 
 	if strings.ToLower(gs.KibanaConfig.Buildpack.LogLevel) == "debug" {
-		gs.Log.Info("----> Show staging directories:")
-		gs.Log.Info("        Cache dir: %s", gs.Stager.CacheDir())
-		gs.Log.Info("        Build dir: %s", gs.Stager.BuildDir())
-		gs.Log.Info("        Buildpack dir: %s", gs.BPDir())
-		gs.Log.Info("        Dependency dir: %s", gs.Stager.DepDir())
-		gs.Log.Info("        DepsIdx: %s", gs.Stager.DepsIdx())
+		gs.Log.Debug("----> Show staging directories:")
+		gs.Log.Debug("        Cache dir: %s", gs.Stager.CacheDir())
+		gs.Log.Debug("        Build dir: %s", gs.Stager.BuildDir())
+		gs.Log.Debug("        Buildpack dir: %s", gs.BPDir())
+		gs.Log.Debug("        Dependency dir: %s", gs.Stager.DepDir())
+		gs.Log.Debug("        DepsIdx: %s", gs.Stager.DepsIdx())
 
-/*		gs.Log.Info("----> list full cache dir")
-		out, err := exec.Command("bash", "-c", fmt.Sprintf("ls -Ral %s", "/tmp/cache")).CombinedOutput()
-		gs.Log.Info(string(out))
-		if err != nil {
-			gs.Log.Warning("Error listing cache dir:", err.Error())
-		}
-*/
 	}
 	return nil
 }

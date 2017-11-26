@@ -44,10 +44,10 @@ func (gs *Supplier) WriteDependencyProfileD(dependencyName string, content strin
 func (gs *Supplier) ReadCachedDependencies() error {
 
 	if gs.KibanaConfig.Buildpack.NoCache {
-		gs.Log.Info("--> cleaning cache")
+		gs.Log.Debug("--> cleaning cache")
 		err := util.RemoveAllContents(gs.Stager.CacheDir())
 		if err != nil{
-			gs.Log.Info("--> error cleaning cache: %s", err.Error())
+			gs.Log.Debug("--> error cleaning cache: %s", err.Error())
 		}
 	}
 
@@ -100,7 +100,6 @@ func (gs *Supplier) InstallDependency(dependency Dependency) error {
 func (gs *Supplier) RemoveUnusedDependencies () error{
 
 	for cachedDep, value := range gs.CachedDeps{
-	//	gs.Log.Info("key: %s, value: %s", cachedDep, value)
 		if value == "" {
 			gs.Log.Debug(fmt.Sprintf("--> deleting unused dependency '%s' from application cache", cachedDep))
 			os.RemoveAll(filepath.Join(gs.DepCacheDir, cachedDep))
