@@ -16,7 +16,6 @@ func (gs *Supplier) BPDir() string {
 }
 
 func (gs *Supplier) NewDependency(name string, versionParts int, configVersion string) (Dependency, error){
-    gs.Log.Info("configVersion: %s", configVersion)
 	var dependency = Dependency{Name: name, VersionParts: versionParts, ConfigVersion: configVersion}
 
 	if parsedVersion, err := gs.SelectDependencyVersion(dependency); err != nil {
@@ -45,7 +44,7 @@ func (gs *Supplier) WriteDependencyProfileD(dependencyName string, content strin
 func (gs *Supplier) ReadCachedDependencies() error {
 
 	if gs.KibanaConfig.Buildpack.NoCache {
-		gs.Log.Info("--> removing cache")
+		gs.Log.Info("--> cleaning cache")
 		err := util.RemoveAllContents(gs.Stager.CacheDir())
 		if err != nil{
 			gs.Log.Info("--> error removing cache: %s", err.Error())
@@ -74,7 +73,6 @@ func (gs *Supplier) InstallDependency(dependency Dependency) error {
 	var err error
 
 	dep := libbuildpack.Dependency{Name: dependency.Name, Version: dependency.Version}
-	gs.Log.Info("dependency.Version: %s", dependency.Version)
 
 	//check if there are other cached versions of the same dependency
 	for cachedDep := range gs.CachedDeps{
