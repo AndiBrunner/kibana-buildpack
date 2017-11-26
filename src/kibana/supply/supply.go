@@ -421,7 +421,7 @@ func (gs *Supplier) InstallDependencyKibanaPlugins() error {
 
 	//Install Kibana-plugins from S3
 	var err error
-	gs.KibanaPlugins, err = gs.NewDependency("Kibana-plugins", 3, gs.KibanaConfig.Version) //same version as Kibana
+	gs.KibanaPlugins, err = gs.NewDependency("kibana-plugins", 3, gs.KibanaConfig.Version) //same version as Kibana
 	if err != nil {
 		return err
 	}
@@ -435,7 +435,7 @@ func (gs *Supplier) InstallDependencyKibanaPlugins() error {
 
 func (gs *Supplier) InstallKibana() error {
 	var err error
-	gs.Kibana, err = gs.NewDependency("Kibana", 3, gs.KibanaConfig.Version)
+	gs.Kibana, err = gs.NewDependency("kibana", 3, gs.KibanaConfig.Version)
 	if err != nil {
 		return err
 	}
