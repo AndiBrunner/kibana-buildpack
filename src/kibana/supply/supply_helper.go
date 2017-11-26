@@ -110,7 +110,7 @@ func (gs *Supplier) RemoveUnusedDependencies () error{
 
 func (gs *Supplier) SelectDependencyVersion(dependency Dependency) (string, error) {
 
-	dependencyVersion := os.Getenv(dependency.ConfigVersion)
+	dependencyVersion := dependency.ConfigVersion
 
 	if dependencyVersion == "" {
 		defaultDependencyVersion, err := gs.Manifest.DefaultVersion(dependency.Name)
