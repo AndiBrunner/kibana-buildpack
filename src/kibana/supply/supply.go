@@ -267,13 +267,6 @@ func (gs *Supplier) PrepareAppDirStructure() error {
 		return err
 	}
 
-	//create dir Kibana.conf.d in DepDir
-	dir = filepath.Join(gs.Stager.DepDir(), "Kibana.conf.d")
-	err = os.MkdirAll(dir, 0755)
-	if err != nil {
-		return err
-	}
-
 	//create dir plugins in DepDir
 	dir = filepath.Join(gs.Stager.DepDir(), "plugins")
 	err = os.MkdirAll(dir, 0755)
@@ -494,7 +487,7 @@ func (gs *Supplier) InstallUserCertificates() error {
 
 		localCert := localCerts[gs.KibanaConfig.Certificates[i]]
 		if localCert != "" {
-			gs.Log.Info(fmt.Sprintf("----> installing user certificate '%s' to TrustStore ... ", gs.KibanaConfig.Certificates[i]))
+			gs.Log.Info(fmt.Sprintf("----> adding user certificate '%s' ... ", gs.KibanaConfig.Certificates[i]))
 			certToInstall :=filepath.Join(gs.Stager.BuildDir(), "certificates", localCert)
 			out, err := exec.Command("bash", "-c", fmt.Sprintf("cat %s >> %s", certToInstall, destCertFileStaging)).CombinedOutput()
 			gs.Log.Info(string(out))
@@ -508,15 +501,6 @@ func (gs *Supplier) InstallUserCertificates() error {
 		}
 	}
 
-	content := util.TrimLines(fmt.Sprintf(`
-			export NODE_EXTRA_CA_CERTS=$DEPS_DIR/%s
-			`,
-		    destCertFileRuntime))
-
-	if err := gs.WriteDependencyProfileD("certificates", content); err != nil {
-		gs.Log.Error("Error writing profile.d script for the certificates: %s", err.Error())
-		return err
-	}
 
 	return nil
 
