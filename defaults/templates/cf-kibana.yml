@@ -2,3 +2,4 @@ server.port: {{ default .Env.PORT "8080" }}
 elasticsearch.url: {{ jsonQuery .Env.VCAP_SERVICES `*[?name=='<<.Env.SERVICE_INSTANCE_NAME>>'].credentials.<<.Env.CREDENTIALS_HOST_FIELD>> | [] | [0]` }}
 elasticsearch.username: {{ jsonQuery .Env.VCAP_SERVICES `*[?name=='<<.Env.SERVICE_INSTANCE_NAME>>'].credentials.<<.Env.CREDENTIALS_USERNAME_FIELD>> | []| [0]` }}
 elasticsearch.password: {{ jsonQuery .Env.VCAP_SERVICES `*[?name=='<<.Env.SERVICE_INSTANCE_NAME>>'].credentials.<<.Env.CREDENTIALS_PASSWORD_FIELD>> | []| [0]` }}
+elasticsearch.ssl.verify: false
