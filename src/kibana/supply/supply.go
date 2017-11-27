@@ -641,7 +641,7 @@ func (gs *Supplier) InstallKibanaPlugins() error {
 
 	xPackPlugins, _ := gs.ReadLocalPlugins(gs.XPack.StagingLocation)
 	defaultPlugins, _ := gs.ReadLocalPlugins(gs.KibanaPlugins.StagingLocation)
-	userPlugins, _ := gs.ReadLocalPlugins(gs.Stager.BuildDir() + "/plugins")
+	userPlugins, _ := gs.ReadLocalPlugins(gs.Stager.BuildDir() + "/plugins/")
 
 	gs.Log.Info("----> Installing Kibana plugins ...")
 	for key, _ := range gs.PluginsToInstall {
@@ -720,7 +720,7 @@ func (gs *Supplier) ReadLocalPlugins(filePath string) ([]string, error) {
 	if filePath == "" {
 		return []string{}, nil
 	}
-	
+
 	file, err := os.Open(filePath)
 	if err != nil {
 		gs.Log.Error("failed opening directory: %s", err)
