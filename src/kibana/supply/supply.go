@@ -717,6 +717,10 @@ func (gs *Supplier) ReadLocalCertificates(filePath string) (map[string]string, e
 
 func (gs *Supplier) ReadLocalPlugins(filePath string) ([]string, error) {
 
+	if filePath == "" {
+		return []string{}, nil
+	}
+	
 	file, err := os.Open(filePath)
 	if err != nil {
 		gs.Log.Error("failed opening directory: %s", err)
