@@ -678,7 +678,7 @@ func (gs *Supplier) InstallKibanaPlugins() error {
 	gs.Log.Info("----> Listing all installed Kibana plugins ...")
 
 	out, err := exec.Command(fmt.Sprintf("%s/bin/kibana-plugin", gs.Kibana.StagingLocation), "list").CombinedOutput()
-	gs.Log.Error(string(out))
+	gs.Log.Info(string(out))
 	if err != nil {
 		gs.Log.Error("Error listing all installed Kibana plugins: %s", err.Error())
 		return err
@@ -717,14 +717,9 @@ func (gs *Supplier) ReadLocalCertificates(filePath string) (map[string]string, e
 
 func (gs *Supplier) ReadLocalPlugins(filePath string) ([]string, error) {
 
-	if filePath == "" {
-		return []string{}, nil
-	}
-
 	file, err := os.Open(filePath)
 	if err != nil {
-		gs.Log.Error("failed opening directory: %s", err)
-		return nil, err
+		return []string{}, nil
 	}
 	defer file.Close()
 
