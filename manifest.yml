@@ -57,6 +57,7 @@ include_files:
 - README.md
 - VERSION
 - defaults/templates/cf-kibana.yml
+- defaults/templates/cf-certificates.yml
 - defaults/templates/templates.yml
 - bin/compile
 - bin/detect

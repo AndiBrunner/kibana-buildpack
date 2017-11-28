@@ -12,4 +12,7 @@ templates:
   - elasticsearch
   - elastic
   plugins:
+- name: cf-certificates
+  type: certificates
+  is-default: true
 

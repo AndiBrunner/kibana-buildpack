@@ -13,6 +13,7 @@ import (
 	"errors"
 	"kibana/util"
 	"os/exec"
+	"encoding/json"
 )
 
 type Manifest interface {
@@ -475,24 +476,20 @@ func (gs *Supplier) PrepareStagingEnvironment() error {
 
 func (gs *Supplier) InstallUserCertificates() error {
 
+	var certArray = []string{}
+
 	if len(gs.KibanaConfig.Certificates) == 0 { // no certificates to install
 		return nil
 	}
 
 	localCerts, _ := gs.ReadLocalCertificates(gs.Stager.BuildDir() + "/certificates")
-	destCertFileStaging := filepath.Join(gs.Stager.DepDir(), "certificates", "kibana.crt")
 
 	for i := 0; i < len(gs.KibanaConfig.Certificates); i++ {
 
 		localCert := localCerts[gs.KibanaConfig.Certificates[i]]
 		if localCert != "" {
 			gs.Log.Info(fmt.Sprintf("----> adding user certificate '%s' ... ", gs.KibanaConfig.Certificates[i]))
-			certToInstall :=filepath.Join(gs.Stager.BuildDir(), "certificates", localCert)
-			out, err := exec.Command("bash", "-c", fmt.Sprintf("cat %s >> %s", certToInstall, destCertFileStaging)).CombinedOutput()
-			gs.Log.Info(string(out))
-			if err != nil {
-				gs.Log.Warning("Error installing user certificate '%s' to TrustStore: %s", gs.KibanaConfig.Certificates[i], err.Error())
-			}
+			certArray = append(certArray, fmt.Sprintf("$HOME/certificates/%s", localCert))
 		} else {
 			err := errors.New("crt file for certificate not found in directory")
 			gs.Log.Error("File %s.crt not found in directory '/certificates'", gs.KibanaConfig.Certificates[i])
@@ -500,6 +497,20 @@ func (gs *Supplier) InstallUserCertificates() error {
 		}
 	}
 
+	if len(certArray) > 0 {
+		jsonCertArray, err := json.Marshal(certArray)
+		if err != nil {
+			return err
+		}
+		content := util.TrimLines(fmt.Sprintf(`
+				export K_CERTS="%s"
+				`, strings.Replace( string(jsonCertArray) ,`"`,`\"`,-1) ))
+
+		if err := gs.WriteDependencyProfileD("certificates", content); err != nil {
+			return err
+		}
+
+	}
 
 	return nil
 
