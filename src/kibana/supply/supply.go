@@ -637,7 +637,7 @@ func (gs *Supplier) InstallKibanaPlugins() error {
 	defaultPlugins, _ := gs.ReadLocalPlugins(gs.KibanaPlugins.StagingLocation)
 	userPlugins, _ := gs.ReadLocalPlugins(gs.Stager.BuildDir() + "/plugins/")
 
-	gs.Log.Info("----> Installing Kibana plugins ...")
+	gs.Log.Info("----> Installing Kibana plugins (this can take a few minutes!) ...")
 	for key, _ := range gs.PluginsToInstall {
 		//Priorisation
 		xpackPlugin := gs.GetLocalPlugin(key, xPackPlugins)
@@ -661,6 +661,7 @@ func (gs *Supplier) InstallKibanaPlugins() error {
 		}
 
 		//Install Plugin
+		gs.Log.Info("      installing ", key)
 		out, err := exec.Command(fmt.Sprintf("%s/bin/kibana-plugin", gs.Kibana.StagingLocation), "install", pluginToInstall).CombinedOutput()
 		if err != nil {
 			gs.Log.Error(string(out))
