@@ -665,6 +665,8 @@ func (gs *Supplier) InstallKibanaPlugins() error {
 		//Install Plugin
 		s := spinner.New(spinner.CharSets[38], 100*time.Millisecond)  // Build our new spinner
 		s.Color("blue")
+		s.Suffix = " Installing Plugin " + key + "..."
+		s.Writer = os.Stderr
 		s.Start()                                                    // Start the spinner
 		out, err := exec.Command(fmt.Sprintf("%s/bin/kibana-plugin", gs.Kibana.StagingLocation), "install", pluginToInstall).CombinedOutput()
 		s.Stop()
