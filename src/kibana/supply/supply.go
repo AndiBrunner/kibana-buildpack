@@ -14,6 +14,8 @@ import (
 	"kibana/util"
 	"os/exec"
 	"encoding/json"
+	"github.com/briandowns/spinner"
+	"time"
 )
 
 type Manifest interface {
@@ -661,7 +663,11 @@ func (gs *Supplier) InstallKibanaPlugins() error {
 		}
 
 		//Install Plugin
+		s := spinner.New(spinner.CharSets[38], 100*time.Millisecond)  // Build our new spinner
+		s.Color("blue")
+		s.Start()                                                    // Start the spinner
 		out, err := exec.Command(fmt.Sprintf("%s/bin/kibana-plugin", gs.Kibana.StagingLocation), "install", pluginToInstall).CombinedOutput()
+		s.Stop()
 		if err != nil {
 			gs.Log.Error(string(out))
 			gs.Log.Error("Error installing Kibana plugin %s: %s", key, err.Error())
