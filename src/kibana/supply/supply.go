@@ -661,7 +661,7 @@ func (gs *Supplier) InstallKibanaPlugins() error {
 		}
 
 		//Install Plugin
-		gs.Log.Info("      installing ", key)
+		gs.Log.Info("       - installing plugin %s", key)
 		out, err := exec.Command(fmt.Sprintf("%s/bin/kibana-plugin", gs.Kibana.StagingLocation), "install", pluginToInstall).CombinedOutput()
 		if err != nil {
 			gs.Log.Error(string(out))
