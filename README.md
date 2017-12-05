@@ -8,6 +8,8 @@ This buildpack allows to deploy [Kibana](https://www.elastic.co/products/kibana)
 
 ## Use Cases
 
+![UseCases](images/use_cases.png)
+
 ### Use Case "automatic"
 
 
