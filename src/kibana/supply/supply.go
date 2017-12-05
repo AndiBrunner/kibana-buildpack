@@ -171,6 +171,11 @@ func Run(gs *Supplier) error {
 		}
 	}
 
+	//List Kibana Plugins
+	if err := gs.ListKibanaPlugins(); err != nil {
+		return err
+	}
+
 	// Remove orphand dependencies from application cache
 	gs.RemoveUnusedDependencies()
 
@@ -631,6 +636,18 @@ func (gs *Supplier) InstallTemplates() error {
 	return nil
 }
 
+func (gs *Supplier) ListKibanaPlugins() error {
+	gs.Log.Info("----> Listing all installed Kibana plugins ...")
+
+	out, err := exec.Command(fmt.Sprintf("%s/bin/kibana-plugin", gs.Kibana.StagingLocation), "list").CombinedOutput()
+	gs.Log.Info(string(out))
+	if err != nil {
+		gs.Log.Error("Error listing all installed Kibana plugins: %s", err.Error())
+		return err
+	}
+	return nil
+}
+
 func (gs *Supplier) InstallKibanaPlugins() error {
 
 	xPackPlugins, _ := gs.ReadLocalPlugins(gs.XPack.StagingLocation)
@@ -670,14 +687,6 @@ func (gs *Supplier) InstallKibanaPlugins() error {
 		}
 	}
 
-	gs.Log.Info("----> Listing all installed Kibana plugins ...")
-
-	out, err := exec.Command(fmt.Sprintf("%s/bin/kibana-plugin", gs.Kibana.StagingLocation), "list").CombinedOutput()
-	gs.Log.Info(string(out))
-	if err != nil {
-		gs.Log.Error("Error listing all installed Kibana plugins: %s", err.Error())
-		return err
-	}
 	return nil
 }
 
