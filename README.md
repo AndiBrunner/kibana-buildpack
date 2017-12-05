@@ -69,7 +69,7 @@ A Kibana Cloud Foundry App has the following structure:
 ├── certificates
 │   └── elasticsearch.crt
 ├── conf.d
-│   ├── cf-kibana.yml
+│   ├── my-kibana.yml
 │   ├── my-additional-kibana-setting.yml
 │   └── my-xpack-settings.yml
 ├── plugins
