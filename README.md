@@ -8,7 +8,8 @@ This buildpack allows to deploy [Kibana](https://www.elastic.co/products/kibana)
 
 ## Use Cases
 
-![UseCases](images/use_cases.png)
+<img src="images/use_cases.png" alt="Use Cases" width="600">
+
 
 ### Use Case "automatic"
 
@@ -40,7 +41,6 @@ certificates:
 
 
 > You want to use only some of pre-defined templates and you deliver also some own Kibana config files in the expected file structure. Depending of which templates you use you are responsible for the service bindings or not. You are able to deliver additional plugins and certificates.
-
 
 #### Example `mixed Kibana` file with automatic binding:
 
@@ -91,6 +91,14 @@ The following settings are allowed:
 * `plugins`: Additional plugins to install (array of plugin names). Defaults to none. If you are in a disconnected environment put the plugin binaries into the plugin folder.
 * `reserved-memory`: Reserved memory in MB which should not be used by heap memory. Default is 300
 * `version`: Version of Kibana to be deployed. Defaults to 6.0.0
+
+##### Currently available templates:
+
+```
+cf-kibana:
+- defines listening port
+- connects to cf elasticsearch service-instance
+```
 
 #### Example `Kibana` file:
 
